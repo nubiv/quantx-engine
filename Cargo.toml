@@ -1,0 +1,10 @@
+[package]
+name = "quantx-engine"
+authors = ["nubiv <h.horace0921@gmail.com>"]
+license = "MIT"
+description = "quantx-engine"
+repository = "https://github.com/nubiv/quantx-engine"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
