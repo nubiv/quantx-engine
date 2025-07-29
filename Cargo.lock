@@ -2769,6 +2769,7 @@ dependencies = [
  "candle-optimisers",
  "charming",
  "chrono",
+ "fnv",
  "kanal",
  "parking_lot",
  "polars",
