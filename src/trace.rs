@@ -12,10 +12,7 @@ pub fn init_tracing() {
         .init()
 }
 
-/// Initialise default JSON `Barter` logging.
-///
-/// Note that this filters out duplicate logs produced by the `AuditManager` updating its replica
-/// `EngineState`.
+/// Initialise default JSON logging.
 pub fn init_json_tracing() {
     tracing_subscriber::registry()
         .with(

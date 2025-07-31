@@ -1,7 +1,9 @@
-use fnv::FnvHashMap;
+mod asset;
+mod exchange;
+mod instrument;
 
-pub struct IndexedMap {
-    exchange_map: Vec<String>,
-}
+pub type FnvIndexMap<K, V> = indexmap::IndexMap<K, V, fnv::FnvBuildHasher>;
+pub type FnvIndexSet<T> = indexmap::IndexSet<T, fnv::FnvBuildHasher>;
 
-pub struct IndexedBuilder {}
+#[derive(Debug)]
+pub struct InternalIndexMap {}
