@@ -3,6 +3,7 @@ use crate::engine::{component::EngineComponents, core::EngineCore, inspect::Insp
 mod clock;
 mod component;
 mod core;
+mod execution;
 mod inspect;
 
 #[derive(Debug)]
