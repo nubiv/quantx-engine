@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct ExchangeIndex(usize);
 
 impl ExchangeIndex {
@@ -14,6 +15,7 @@ impl std::fmt::Display for ExchangeIndex {
 
 pub trait ExchangeId {}
 
+#[derive(Debug)]
 pub enum ExchangeIdFuturesCN {
     SHFE,
     INE,
@@ -23,6 +25,9 @@ pub enum ExchangeIdFuturesCN {
     Unknown,
 }
 
+impl ExchangeId for ExchangeIdFuturesCN {}
+
+#[derive(Debug)]
 pub enum ExchangeIdCrypto {
     Bybit,
     Binance,
@@ -31,3 +36,5 @@ pub enum ExchangeIdCrypto {
     Kraken,
     Unknown,
 }
+
+impl ExchangeId for ExchangeIdCrypto {}
