@@ -1,9 +1,27 @@
+use crate::data::{
+    asset::{Asset, AssetByExchange, AssetIndex},
+    exchange::{Exchange, ExchangeIndex},
+    instrument::{Instrument, InstrumentIndex},
+};
+
 mod asset;
 mod exchange;
 mod instrument;
 
-pub type FnvIndexMap<K, V> = indexmap::IndexMap<K, V, fnv::FnvBuildHasher>;
-pub type FnvIndexSet<T> = indexmap::IndexSet<T, fnv::FnvBuildHasher>;
+#[derive(Debug)]
+pub struct InternalIndexMap<E, A, I>
+where
+    E: Exchange,
+    A: Asset,
+    I: Instrument,
+{
+    exchanges: Vec<IndexSlot<ExchangeIndex, E>>,
+    assets: Vec<IndexSlot<AssetIndex, A>>,
+    instruments: Vec<IndexSlot<InstrumentIndex, I>>,
+}
 
 #[derive(Debug)]
-pub struct InternalIndexMap {}
+pub struct IndexSlot<K, V> {
+    index: K,
+    value: V,
+}

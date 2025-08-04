@@ -5,6 +5,7 @@ mod component;
 mod core;
 mod execution;
 mod inspect;
+mod state;
 
 #[derive(Debug)]
 pub struct Engine<Clock> {

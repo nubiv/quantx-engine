@@ -13,10 +13,10 @@ impl std::fmt::Display for ExchangeIndex {
     }
 }
 
-pub trait ExchangeId {}
+pub trait Exchange {}
 
 #[derive(Debug)]
-pub enum ExchangeIdFuturesCN {
+pub enum ExchangeIdFutureCN {
     SHFE,
     INE,
     DCE,
@@ -25,7 +25,7 @@ pub enum ExchangeIdFuturesCN {
     Unknown,
 }
 
-impl ExchangeId for ExchangeIdFuturesCN {}
+impl Exchange for ExchangeIdFutureCN {}
 
 #[derive(Debug)]
 pub enum ExchangeIdCrypto {
@@ -37,4 +37,4 @@ pub enum ExchangeIdCrypto {
     Unknown,
 }
 
-impl ExchangeId for ExchangeIdCrypto {}
+impl Exchange for ExchangeIdCrypto {}
