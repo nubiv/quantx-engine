@@ -7,8 +7,8 @@ mod execution;
 mod inspect;
 
 #[derive(Debug)]
-pub struct Engine {
-    core: EngineCore,
+pub struct Engine<Clock> {
+    core: EngineCore<Clock>,
     components: EngineComponents,
     feed_tx: String,
     inspector: Option<Inspect>,

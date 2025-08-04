@@ -1,6 +1,6 @@
 use chrono::{DateTime, Utc};
 
-pub trait Clock {}
+pub trait EngineClock {}
 
 #[derive(Debug)]
 pub struct SimulatedClock {
@@ -13,5 +13,9 @@ struct SimulatedClockInner {
     time_live_last_event: DateTime<Utc>,
 }
 
+impl EngineClock for SimulatedClock {}
+
 #[derive(Debug)]
 pub struct LiveClock {}
+
+impl EngineClock for LiveClock {}
