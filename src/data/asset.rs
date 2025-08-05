@@ -18,7 +18,12 @@ impl std::fmt::Display for AssetIndex {
 }
 
 #[derive(Debug)]
-pub enum AssetUnified {
+pub struct AssetUnified(smol_str::SmolStr);
+
+impl Asset for AssetUnified {}
+
+#[derive(Debug)]
+pub enum AssetCentralized {
     CNY,
     USD,
     EUR,
@@ -30,7 +35,7 @@ pub enum AssetUnified {
     NZD,
 }
 
-impl Asset for AssetUnified {}
+impl Asset for AssetCentralized {}
 
 #[derive(Debug)]
 pub struct AssetByExchange<E, AN>

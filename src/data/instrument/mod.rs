@@ -38,7 +38,6 @@ impl<ExchangeSlot, AssetSlot> Instrument for InstrumentCrypto<ExchangeSlot, Asse
 pub struct InstrumentFuture<ExchangeSlot, AssetSlot, IN> {
     exchange: ExchangeSlot,
     name: IN,
-    underlying: Underlying<AssetSlot>,
     kind: InstrumentKind<AssetSlot>,
     spec: InstrumentSpec<AssetSlot>,
 }
