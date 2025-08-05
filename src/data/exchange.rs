@@ -1,4 +1,6 @@
-#[derive(Debug)]
+use derive_more::Constructor;
+
+#[derive(Debug, Constructor)]
 pub struct ExchangeIndex(usize);
 
 impl ExchangeIndex {
@@ -13,9 +15,9 @@ impl std::fmt::Display for ExchangeIndex {
     }
 }
 
-pub trait Exchange {}
+pub trait Exchange: PartialEq + Eq + PartialOrd + Ord {}
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ExchangeIdFutureCN {
     SHFE,
     INE,
@@ -27,7 +29,7 @@ pub enum ExchangeIdFutureCN {
 
 impl Exchange for ExchangeIdFutureCN {}
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ExchangeIdCrypto {
     Bybit,
     Binance,

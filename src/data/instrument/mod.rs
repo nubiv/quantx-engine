@@ -1,3 +1,5 @@
+use derive_more::Constructor;
+
 use crate::data::instrument::{future::FutureDetail, option::OptionDetail, perp::PerpetualDetail, spec::InstrumentSpec};
 
 mod future;
@@ -5,9 +7,9 @@ mod option;
 mod perp;
 mod spec;
 
-pub trait Instrument {}
+pub trait Instrument: PartialEq + Eq + PartialOrd + Ord {}
 
-#[derive(Debug)]
+#[derive(Debug, Constructor)]
 pub struct InstrumentIndex(usize);
 
 impl InstrumentIndex {
@@ -22,7 +24,7 @@ impl std::fmt::Display for InstrumentIndex {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct InstrumentCrypto<ExchangeSlot, AssetSlot> {
     exchange: ExchangeSlot,
     name: InstrumentName,
@@ -32,9 +34,14 @@ pub struct InstrumentCrypto<ExchangeSlot, AssetSlot> {
     spec: InstrumentSpec<AssetSlot>,
 }
 
-impl<ExchangeSlot, AssetSlot> Instrument for InstrumentCrypto<ExchangeSlot, AssetSlot> {}
+impl<ExchangeSlot, AssetSlot> Instrument for InstrumentCrypto<ExchangeSlot, AssetSlot>
+where
+    ExchangeSlot: PartialEq + Eq + PartialOrd + Ord,
+    AssetSlot: PartialEq + Eq + PartialOrd + Ord,
+{
+}
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct InstrumentFuture<ExchangeSlot, AssetSlot, IN> {
     exchange: ExchangeSlot,
     name: IN,
@@ -42,33 +49,39 @@ pub struct InstrumentFuture<ExchangeSlot, AssetSlot, IN> {
     spec: InstrumentSpec<AssetSlot>,
 }
 
-impl<ExchangeSlot, AssetSlot, IN> Instrument for InstrumentFuture<ExchangeSlot, AssetSlot, IN> {}
+impl<ExchangeSlot, AssetSlot, IN> Instrument for InstrumentFuture<ExchangeSlot, AssetSlot, IN>
+where
+    ExchangeSlot: PartialEq + Eq + PartialOrd + Ord,
+    AssetSlot: PartialEq + Eq + PartialOrd + Ord,
+    IN: PartialEq + Eq + PartialOrd + Ord,
+{
+}
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct InstrumentName {
     name_internal: InstrumentNameInternal,
     name_exchange: InstrumentNameExchange,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct InstrumentNameInternal(smol_str::SmolStr);
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct InstrumentNameExchange(smol_str::SmolStr);
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Underlying<AssetSlot> {
     pub base: AssetSlot,
     pub quote: AssetSlot,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum InstrumentQuoteKind {
     UnderlyingBase,
     UnderlyingQuote,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum InstrumentKind<AssetSlot> {
     Spot,
     Perpetual(PerpetualDetail<AssetSlot>),

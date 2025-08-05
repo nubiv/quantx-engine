@@ -1,8 +1,10 @@
+use derive_more::Constructor;
+
 use crate::data::exchange::Exchange;
 
-pub trait Asset {}
+pub trait Asset: PartialEq + Eq + PartialOrd + Ord {}
 
-#[derive(Debug)]
+#[derive(Debug, Constructor)]
 pub struct AssetIndex(pub usize);
 
 impl AssetIndex {
@@ -17,12 +19,12 @@ impl std::fmt::Display for AssetIndex {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AssetUnified(smol_str::SmolStr);
 
 impl Asset for AssetUnified {}
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub enum AssetCentralized {
     CNY,
     USD,
@@ -37,16 +39,22 @@ pub enum AssetCentralized {
 
 impl Asset for AssetCentralized {}
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AssetByExchange<E, AN>
 where
     E: Exchange,
+    AN: PartialEq + Eq + PartialOrd + Ord,
 {
     exchange: E,
     name: AN,
 }
 
-impl<E, AN> Asset for AssetByExchange<E, AN> where E: Exchange {}
+impl<E, AN> Asset for AssetByExchange<E, AN>
+where
+    E: Exchange,
+    AN: PartialEq + Eq + PartialOrd + Ord,
+{
+}
 
 #[derive(Debug)]
 pub struct AssetName {
