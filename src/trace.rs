@@ -1,6 +1,5 @@
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
-/// Initialise default Non-JSON tracing.
 pub fn init_tracing() {
     tracing_subscriber::registry()
         .with(
@@ -12,7 +11,6 @@ pub fn init_tracing() {
         .init()
 }
 
-/// Initialise default JSON logging.
 pub fn init_json_tracing() {
     tracing_subscriber::registry()
         .with(
