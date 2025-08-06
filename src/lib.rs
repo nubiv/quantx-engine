@@ -1,5 +1,5 @@
 mod channel;
-mod data;
+pub mod data;
 mod engine;
 mod error;
 mod event;
