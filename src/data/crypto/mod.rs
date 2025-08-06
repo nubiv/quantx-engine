@@ -11,7 +11,6 @@ use crate::data::{
 mod asset;
 mod exchange;
 mod instrument;
-mod spec;
 
 #[derive(Debug)]
 pub struct IndexerCrypto {

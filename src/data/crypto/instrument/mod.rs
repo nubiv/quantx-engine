@@ -1,7 +1,9 @@
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 
-use crate::data::{common::Instrument, crypto::spec::InstrumentSpecCrypto};
+use crate::data::{common::Instrument, crypto::instrument::spec::InstrumentSpecCrypto};
+
+mod spec;
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct InstrumentCrypto<ExchangeSlot, AssetSlot> {
