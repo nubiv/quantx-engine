@@ -1,28 +1,7 @@
-use derive_more::Constructor;
+use chrono::{DateTime, Utc};
+use rust_decimal::Decimal;
 
-use crate::data::instrument::{future::FutureDetail, option::OptionDetail, perp::PerpetualDetail, spec::InstrumentSpec};
-
-mod future;
-mod option;
-mod perp;
-mod spec;
-
-pub trait Instrument: PartialEq + Eq + PartialOrd + Ord {}
-
-#[derive(Debug, Constructor)]
-pub struct InstrumentIndex(usize);
-
-impl InstrumentIndex {
-    pub fn index(&self) -> usize {
-        self.0
-    }
-}
-
-impl std::fmt::Display for InstrumentIndex {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "ExchangeIndex({})", self.0)
-    }
-}
+use crate::data::{common::Instrument, crypto::spec::InstrumentSpecCrypto};
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct InstrumentCrypto<ExchangeSlot, AssetSlot> {
@@ -31,29 +10,13 @@ pub struct InstrumentCrypto<ExchangeSlot, AssetSlot> {
     underlying: Underlying<AssetSlot>,
     quote: InstrumentQuoteKind,
     kind: InstrumentKind<AssetSlot>,
-    spec: InstrumentSpec<AssetSlot>,
+    spec: InstrumentSpecCrypto<AssetSlot>,
 }
 
 impl<ExchangeSlot, AssetSlot> Instrument for InstrumentCrypto<ExchangeSlot, AssetSlot>
 where
     ExchangeSlot: PartialEq + Eq + PartialOrd + Ord,
     AssetSlot: PartialEq + Eq + PartialOrd + Ord,
-{
-}
-
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub struct InstrumentFuture<ExchangeSlot, AssetSlot, IN> {
-    exchange: ExchangeSlot,
-    name: IN,
-    kind: InstrumentKind<AssetSlot>,
-    spec: InstrumentSpec<AssetSlot>,
-}
-
-impl<ExchangeSlot, AssetSlot, IN> Instrument for InstrumentFuture<ExchangeSlot, AssetSlot, IN>
-where
-    ExchangeSlot: PartialEq + Eq + PartialOrd + Ord,
-    AssetSlot: PartialEq + Eq + PartialOrd + Ord,
-    IN: PartialEq + Eq + PartialOrd + Ord,
 {
 }
 
@@ -87,4 +50,27 @@ pub enum InstrumentKind<AssetSlot> {
     Perpetual(PerpetualDetail<AssetSlot>),
     Future(FutureDetail<AssetSlot>),
     Option(OptionDetail<AssetSlot>),
+}
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct PerpetualDetail<AssetSlot> {
+    contract_size: Decimal,
+    settlement_asset: AssetSlot,
+}
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct FutureDetail<AssetSlot> {
+    contract_size: Decimal,
+    settlement_asset: AssetSlot,
+    expiry: DateTime<Utc>,
+}
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct OptionDetail<AssetSlot> {
+    contract_size: Decimal,
+    settlement_asset: AssetSlot,
+    kind: String,
+    exercise: String,
+    expiry: DateTime<Utc>,
+    strike: Decimal,
 }

@@ -1,7 +1,7 @@
 use rust_decimal::Decimal;
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub struct InstrumentSpec<AssetSlot> {
+pub struct InstrumentSpecCrypto<AssetSlot> {
     price: InstrumentSpecPrice,
     quantity: InstrumentSpecQuantity<AssetSlot>,
 }
