@@ -1,5 +1,5 @@
 use crate::data::{
-    common::{AssetIndex, ExchangeIndex, InstrumentIndex},
+    common::{AssetIndex, ExchangeIndex, Instrument, InstrumentIndex},
     crypto::{
         asset::{AssetByExchange, AssetCrypto},
         exchange::ExchangeIdCrypto,
@@ -23,8 +23,29 @@ impl Indexer for IndexerCrypto {
     type Exchange = ExchangeIdCrypto;
     type Asset = AssetByExchange<AssetCrypto>;
     type Instrument = InstrumentCrypto<IndexSlot<ExchangeIndex, ExchangeIdCrypto>, AssetIndex>;
+    type UnindexedInstrument = InstrumentCrypto<ExchangeIdCrypto, AssetCrypto>;
 
     type IndexerBuilder = IndexerCryptoBuilder;
+
+    fn new<Iter, I>(instruments: Iter) -> Self
+    where
+        Iter: IntoIterator<Item = I>,
+        I: Into<Self::UnindexedInstrument>,
+    {
+        todo!()
+    }
+
+    fn exchanges(&self) -> &[IndexSlot<ExchangeIndex, Self::Exchange>] {
+        todo!()
+    }
+
+    fn assets(&self) -> &[IndexSlot<AssetIndex, Self::Asset>] {
+        todo!()
+    }
+
+    fn instruments(&self) -> &[IndexSlot<InstrumentIndex, Self::Instrument>] {
+        todo!()
+    }
 }
 
 #[derive(Debug, Default)]
@@ -36,4 +57,13 @@ pub struct IndexerCryptoBuilder {
 
 impl IndexerBuilder for IndexerCryptoBuilder {
     type Indexer = IndexerCrypto;
+    type UnindexedInstrument = InstrumentCrypto<ExchangeIdCrypto, AssetCrypto>;
+
+    fn add_instrument(self, instrument: Self::UnindexedInstrument) -> Self {
+        todo!()
+    }
+
+    fn build(self) -> Self::Indexer {
+        todo!()
+    }
 }
