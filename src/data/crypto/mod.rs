@@ -1,11 +1,11 @@
 use crate::data::{
-    common::{AssetIndex, ExchangeIndex, Instrument, InstrumentIndex},
+    common::{AssetIndex, ExchangeIndex, InstrumentIndex, MultiAssetsMode, MultiExchangeMode},
     crypto::{
         asset::{AssetByExchange, AssetCrypto},
         exchange::ExchangeIdCrypto,
         instrument::InstrumentCrypto,
     },
-    index::{IndexSlot, Indexer, IndexerBuilder},
+    index::{IndexSlot, Indexer, IndexerBuilder, IndexerMEMA},
 };
 
 mod asset;
@@ -19,7 +19,7 @@ pub struct IndexerCrypto {
     instruments: Vec<IndexSlot<InstrumentIndex, InstrumentCrypto<IndexSlot<ExchangeIndex, ExchangeIdCrypto>, AssetIndex>>>,
 }
 
-impl Indexer for IndexerCrypto {
+impl Indexer<MultiExchangeMode, MultiAssetsMode> for IndexerCrypto {
     type Exchange = ExchangeIdCrypto;
     type Asset = AssetByExchange<AssetCrypto>;
     type Instrument = InstrumentCrypto<IndexSlot<ExchangeIndex, ExchangeIdCrypto>, AssetIndex>;
@@ -35,15 +35,17 @@ impl Indexer for IndexerCrypto {
         todo!()
     }
 
+    fn instruments(&self) -> &[IndexSlot<InstrumentIndex, Self::Instrument>] {
+        todo!()
+    }
+}
+
+impl IndexerMEMA for IndexerCrypto {
     fn exchanges(&self) -> &[IndexSlot<ExchangeIndex, Self::Exchange>] {
         todo!()
     }
 
     fn assets(&self) -> &[IndexSlot<AssetIndex, Self::Asset>] {
-        todo!()
-    }
-
-    fn instruments(&self) -> &[IndexSlot<InstrumentIndex, Self::Instrument>] {
         todo!()
     }
 }
@@ -55,7 +57,7 @@ pub struct IndexerCryptoBuilder {
     instruments: Vec<InstrumentCrypto<IndexSlot<ExchangeIndex, ExchangeIdCrypto>, AssetIndex>>,
 }
 
-impl IndexerBuilder for IndexerCryptoBuilder {
+impl IndexerBuilder<MultiExchangeMode, MultiAssetsMode> for IndexerCryptoBuilder {
     type Indexer = IndexerCrypto;
     type UnindexedInstrument = InstrumentCrypto<ExchangeIdCrypto, AssetCrypto>;
 

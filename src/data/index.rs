@@ -1,14 +1,33 @@
 use derive_more::Constructor;
 
-use crate::data::common::{Asset, AssetIndex, Exchange, ExchangeIndex, Instrument, InstrumentIndex};
+use crate::data::common::{
+    Asset,
+    AssetIndex,
+    AssetMode,
+    Exchange,
+    ExchangeIndex,
+    ExchangeMode,
+    Instrument,
+    InstrumentIndex,
+    MultiAssetsMode,
+    MultiExchangeMode,
+    SingleAssetMode,
+    SingleExchangeMode,
+};
 
-pub trait Indexer {
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Constructor)]
+pub struct IndexSlot<K, V> {
+    index: K,
+    value: V,
+}
+
+pub trait Indexer<EM: ExchangeMode, AM: AssetMode> {
     type Exchange: Exchange;
     type Asset: Asset;
     type Instrument: Instrument;
     type UnindexedInstrument: Instrument;
 
-    type IndexerBuilder: IndexerBuilder;
+    type IndexerBuilder: IndexerBuilder<EM, AM>;
 
     fn new<Iter, I>(instruments: Iter) -> Self
     where
@@ -19,17 +38,13 @@ pub trait Indexer {
         Self::IndexerBuilder::default()
     }
 
-    fn exchanges(&self) -> &[IndexSlot<ExchangeIndex, Self::Exchange>];
-
-    fn assets(&self) -> &[IndexSlot<AssetIndex, Self::Asset>];
-
     fn instruments(&self) -> &[IndexSlot<InstrumentIndex, Self::Instrument>];
 }
 
-pub trait IndexerBuilder: Default {
+pub trait IndexerBuilder<EM: ExchangeMode, AM: AssetMode>: Default {
     type UnindexedInstrument: Instrument;
 
-    type Indexer: Indexer;
+    type Indexer: Indexer<EM, AM>;
 
     fn new() -> Self {
         Self::default()
@@ -39,8 +54,22 @@ pub trait IndexerBuilder: Default {
     fn build(self) -> Self::Indexer;
 }
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Constructor)]
-pub struct IndexSlot<K, V> {
-    index: K,
-    value: V,
+pub trait IndexerSESA: Indexer<SingleExchangeMode, SingleAssetMode> {
+    fn exchange(&self) -> &Self::Exchange;
+    fn asset(&self) -> &Self::Asset;
+}
+
+pub trait IndexerSEMA: Indexer<SingleExchangeMode, MultiAssetsMode> {
+    fn exchange(&self) -> &Self::Exchange;
+    fn assets(&self) -> &[IndexSlot<AssetIndex, Self::Asset>];
+}
+
+pub trait IndexerMESA: Indexer<MultiExchangeMode, SingleAssetMode> {
+    fn exchanges(&self) -> &[IndexSlot<ExchangeIndex, Self::Exchange>];
+    fn asset(&self) -> &Self::Asset;
+}
+
+pub trait IndexerMEMA: Indexer<MultiExchangeMode, MultiAssetsMode> {
+    fn exchanges(&self) -> &[IndexSlot<ExchangeIndex, Self::Exchange>];
+    fn assets(&self) -> &[IndexSlot<AssetIndex, Self::Asset>];
 }
