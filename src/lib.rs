@@ -1,4 +1,5 @@
 mod channel;
+mod crypto;
 pub mod data;
 mod engine;
 mod error;

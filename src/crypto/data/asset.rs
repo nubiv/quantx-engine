@@ -1,4 +1,4 @@
-use crate::data::{common::Asset, crypto::exchange::ExchangeIdCrypto};
+use crate::{crypto::data::exchange::ExchangeIdCrypto, data::common::Asset};
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AssetByExchange<A> {

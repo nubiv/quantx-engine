@@ -1,11 +1,13 @@
-use crate::data::{
-    common::{AssetIndex, ExchangeIndex, InstrumentIndex, MultiAssetsMode, MultiExchangeMode},
-    crypto::{
+use crate::{
+    crypto::data::{
         asset::{AssetByExchange, AssetCrypto},
         exchange::ExchangeIdCrypto,
         instrument::InstrumentCrypto,
     },
-    index::{IndexSlot, Indexer, IndexerBuilder, IndexerMEMA},
+    data::{
+        common::{AssetIndex, ExchangeIndex, InstrumentIndex, MultiAssetsMode, MultiExchangeMode},
+        index::{IndexSlot, Indexer, IndexerBuilder, IndexerMEMA},
+    },
 };
 
 mod asset;

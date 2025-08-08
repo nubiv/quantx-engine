@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 
-use crate::data::{common::Instrument, crypto::instrument::spec::InstrumentSpecCrypto};
+use crate::{crypto::data::instrument::spec::InstrumentSpecCrypto, data::common::Instrument};
 
 mod spec;
 
