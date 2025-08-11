@@ -1,6 +1,5 @@
-#[derive(Debug)]
-pub struct EngineComponents {
-    executors: String,
-    market_data: String,
-    account_data: String,
+pub trait EngineComponentBundle {
+    type ExecutorHandles;
+    type MarketHandle;
+    type AccountHandle;
 }

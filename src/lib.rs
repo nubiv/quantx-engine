@@ -1,7 +1,7 @@
 mod channel;
 mod crypto;
 pub mod data;
-mod engine;
+pub mod engine;
 mod error;
 mod event;
 pub mod trace;

@@ -1,13 +1,13 @@
 use crate::engine::clock::EngineClock;
 
-#[derive(Debug)]
-pub struct EngineCore<Clock> {
-    meta: String,
-    clock: Clock,
-    state: String,
-    strategy: String,
-    risk: String,
-    exe_txs: String,
+pub trait Processor {
+    type Inspect;
+    fn process(&mut self, event: &str) -> Self::Inspect;
 }
 
-impl<Clock> EngineCore<Clock> where Clock: EngineClock {}
+pub trait EngineCore {}
+
+pub trait EngineCoreDynamic {
+    // TODO:
+    // EngineCore for Dynamic Strategies (libloading or alternatives)
+}
