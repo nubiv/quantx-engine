@@ -23,6 +23,12 @@ indexmap = "2.10.0"
 fnv = "1.0.7"
 smol_str = "0.3.2"
 
+# Async
+tokio = { version = "1.47.1", default-features = false, features = [
+    "rt-multi-thread",
+] }
+futures = "0.3.31"
+
 # Tracing
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter", "json"] }
