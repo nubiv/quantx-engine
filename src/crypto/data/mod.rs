@@ -13,6 +13,8 @@ use crate::{
 mod asset;
 mod exchange;
 mod instrument;
+mod market;
+mod stream;
 
 #[derive(Debug)]
 pub struct IndexerCrypto {
