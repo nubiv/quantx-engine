@@ -20,17 +20,23 @@ pub trait Engine {
     // fn wire_inspector(&mut self) -> Option<&Inspect>;
 }
 
-pub trait EngineBuild: Sized {
+pub trait EngineBuild {
     type Engine: Engine;
 
     fn new() -> Self;
     async fn init_internal(self, runtime: tokio::runtime::Handle) -> Self::Engine;
 
-    async fn init(self) -> Self::Engine {
+    async fn init(self) -> Self::Engine
+    where
+        Self: Sized,
+    {
         self.init_internal(tokio::runtime::Handle::current()).await
     }
 
-    async fn init_with_runtime(self, runtime: tokio::runtime::Handle) -> Self::Engine {
+    async fn init_with_runtime(self, runtime: tokio::runtime::Handle) -> Self::Engine
+    where
+        Self: Sized,
+    {
         self.init_internal(runtime).await
     }
 }
