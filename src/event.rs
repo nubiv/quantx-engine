@@ -6,7 +6,7 @@
 //
 // Strategy -> (Opens, Cancels) -> RiskManager -> (OpensApproved, CancelsApproved, OpensRejected, CancelsRejected) -> Apprroved to InFlightRecord
 //
-// ExecutionTxs -> FnvIndexMap
+// ExecutionTxs -> Tx (InstrumentIndex) + ExchangeId
 //
 // MarketEvent
 //  time_exchange
